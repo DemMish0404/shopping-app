@@ -1,5 +1,6 @@
 import {  createContext, ReactNode, useContext, useState } from "react";
 import { ShoppingCart } from "../components/ShoppingCart";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 // ReactNode массив коллекция html элементов
 type ShoppingCartContextProviderProps = {
@@ -33,7 +34,7 @@ export function useShoppingCart() {
 
 //* создаем провайдер для контекста чтобы знать в каких рамках действует этот контекст
 export function ShoppingCartContextProvider({children}:ShoppingCartContextProviderProps ){
-   const [cartItems, setCartItems] = useState<CartItem[]>([])
+   const [cartItems, setCartItems] = useLocalStorage<CartItem[]>('shopping-cart',[])
    const [isCartOpen , setIsCarOpen] = useState(false)
 
    const allCartQuantity = cartItems.reduce((quantity, item)=> item.quantity + quantity , 0)
